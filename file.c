@@ -3,6 +3,21 @@
 #include <unistd.h>
 #include <pthread.h>
 
+/*
+
+ARM RowHammer Attack
+
+put addr1 into X9
+put addr2 into X10
+for i := 0 to N − 1 do
+   STR X0, [X9]
+   STR X0, [X10]
+   DC CVAC, X9
+   DC CVAC, X10
+   DSB 0xB
+
+*/
+
 void *rowhammer(void *input)
 {
 	while(1) {
