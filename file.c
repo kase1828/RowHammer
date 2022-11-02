@@ -15,7 +15,7 @@ for i := 0 to N − 1 do
    DC CVAC, X9
    DC CVAC, X10
    DSB 0xB
-
+hello
 */
 
 void *rowhammer(void *input)
