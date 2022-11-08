@@ -8,9 +8,7 @@ struct thread_args {
 	int *addr1;
 	int *addr2;
 
-	int z0;
-	int m8, m7, m6, m5, m4, m3, m2, m1;
-	int p1, p2, p3, p4, p5, p6, p7, p8;
+	int nums17[17];
 };
 
 void *rowhammer(void *input)
@@ -47,43 +45,15 @@ void *check(void *input)
 	sleep(1);
 	struct thread_args *args = input;
 
-	args->m8 = (int) *(args->addr1 - 8);
-	args->m7 = (int) *(args->addr1 - 7);
-	args->m6 = (int) *(args->addr1 - 6);
-	args->m5 = (int) *(args->addr1 - 5);
-	args->m4 = (int) *(args->addr1 - 4);
-	args->m3 = (int) *(args->addr1 - 3);
-	args->m2 = (int) *(args->addr1 - 2);
-	args->m1 = (int) *(args->addr1 - 1);
-	args->z0 = (int) *(args->addr1);
-	args->p1 = (int) *(args->addr1 + 1);
-	args->p2 = (int) *(args->addr1 + 2);
-	args->p3 = (int) *(args->addr1 + 3);
-	args->p4 = (int) *(args->addr1 + 4);
-	args->p5 = (int) *(args->addr1 + 5);
-	args->p6 = (int) *(args->addr1 + 6);
-	args->p7 = (int) *(args->addr1 + 7);
-	args->p8 = (int) *(args->addr1 + 8);
+	for (int i = 0; i < 17; i++) {
+		args->nums17[i] = (int) *(args->addr1 - 8 + i);
+	}
 
 	while(1) {
 
-		if ((int) *(args->addr1 - 8) != args->m8) break;
-		if ((int) *(args->addr1 - 7) != args->m7) break;
-		if ((int) *(args->addr1 - 6) != args->m6) break;
-		if ((int) *(args->addr1 - 5) != args->m5) break;
-		if ((int) *(args->addr1 - 4) != args->m4) break;
-		if ((int) *(args->addr1 - 3) != args->m3) break;
-		if ((int) *(args->addr1 - 2) != args->m2) break;
-		if ((int) *(args->addr1 - 1) != args->m1) break;
-		if ((int) *(args->addr1) != args->z0) break;
-		if ((int) *(args->addr1 + 1) != args->p1) break;
-		if ((int) *(args->addr1 + 2) != args->p2) break;
-		if ((int) *(args->addr1 + 3) != args->p3) break;
-		if ((int) *(args->addr1 + 4) != args->p4) break;
-		if ((int) *(args->addr1 + 5) != args->p5) break;
-		if ((int) *(args->addr1 + 6) != args->p6) break;
-		if ((int) *(args->addr1 + 7) != args->p7) break;
-		if ((int) *(args->addr1 + 8) != args->p8) break;
+		for (int i = 0; i < 17; i++) {
+			if ((int) *(args->addr1 - 8 + i) != args->nums17[i]) return 0;
+		}
 	}
 
 	return 0;
