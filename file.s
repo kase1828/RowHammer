@@ -71,6 +71,9 @@ LBB1_3:                                 ;   in Loop: Header=BB1_1 Depth=1
 	str	w8, [sp, #12]
 	b	LBB1_1
 LBB1_4:
+	adrp	x0, l_.str@PAGE
+	add	x0, x0, l_.str@PAGEOFF
+	bl	_printf
 	b	LBB1_5
 LBB1_5:                                 ; =>This Loop Header: Depth=1
                                         ;     Child Loop BB1_6 Depth 2
@@ -125,8 +128,8 @@ _main:                                  ; @main
 	mov	w8, #0
 	str	w8, [sp, #36]                   ; 4-byte Folded Spill
 	stur	wzr, [x29, #-4]
-	adrp	x0, l_.str@PAGE
-	add	x0, x0, l_.str@PAGEOFF
+	adrp	x0, l_.str.1@PAGE
+	add	x0, x0, l_.str.1@PAGEOFF
 	bl	_printf
 	sub	x8, x29, #8
 	str	x8, [sp, #8]                    ; 8-byte Folded Spill
@@ -152,8 +155,8 @@ _main:                                  ; @main
 	adrp	x2, _rowhammer@PAGE
 	add	x2, x2, _rowhammer@PAGEOFF
 	bl	_pthread_create
-	adrp	x0, l_.str.1@PAGE
-	add	x0, x0, l_.str.1@PAGEOFF
+	adrp	x0, l_.str.2@PAGE
+	add	x0, x0, l_.str.2@PAGEOFF
 	bl	_printf
 	ldr	x1, [sp, #24]                   ; 8-byte Folded Reload
 	ldur	x3, [x29, #-24]
@@ -164,13 +167,13 @@ _main:                                  ; @main
 	ldr	x1, [sp, #24]                   ; 8-byte Folded Reload
 	ldr	x0, [sp, #40]
 	bl	_pthread_join
-	adrp	x0, l_.str.2@PAGE
-	add	x0, x0, l_.str.2@PAGEOFF
+	adrp	x0, l_.str.3@PAGE
+	add	x0, x0, l_.str.3@PAGEOFF
 	bl	_printf
 	ldur	x0, [x29, #-32]
 	bl	_pthread_cancel
-	adrp	x0, l_.str.3@PAGE
-	add	x0, x0, l_.str.3@PAGEOFF
+	adrp	x0, l_.str.4@PAGE
+	add	x0, x0, l_.str.4@PAGEOFF
 	bl	_printf
 	ldr	w0, [sp, #36]                   ; 4-byte Folded Reload
 	ldp	x29, x30, [sp, #80]             ; 16-byte Folded Reload
@@ -180,15 +183,18 @@ _main:                                  ; @main
                                         ; -- End function
 	.section	__TEXT,__cstring,cstring_literals
 l_.str:                                 ; @.str
-	.asciz	"starting...\n"
+	.asciz	"searcing...\n"
 
 l_.str.1:                               ; @.str.1
-	.asciz	"hammering...\n"
+	.asciz	"starting...\n"
 
 l_.str.2:                               ; @.str.2
-	.asciz	"read disturb found\n"
+	.asciz	"hammering...\n"
 
 l_.str.3:                               ; @.str.3
+	.asciz	"read disturb found\n"
+
+l_.str.4:                               ; @.str.4
 	.asciz	"exiting...\n"
 
 .subsections_via_symbols

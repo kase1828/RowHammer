@@ -49,6 +49,7 @@ void *check(void *input)
 		args->nums17[i] = (int) *(args->addr1 - 8 + i);
 	}
 
+	printf("searcing...\n");
 	while(1) {
 
 		for (int i = 0; i < 17; i++) {
