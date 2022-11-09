@@ -2,6 +2,17 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <pthread.h>
+#include <stdio.h>
+#include <string.h> 
+#include <pagemap.h>
+#include <linux/perf_event.h>
+#include <sys/syscall.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <string.h>
+#include <pthread.h>
 #define _GNU_SOURCE
 
 //#define SCTLR_EL1_UCI	BIT(26)
