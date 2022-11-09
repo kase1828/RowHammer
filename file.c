@@ -11,6 +11,16 @@ struct thread_args {
 	int nums17[17];
 };
 
+/*
+__asm__ __volatile__
+    (
+      "\tmrc p15, 0, %0, c1, c0, 0\n"
+      : "=r" (sctlr)
+      :
+      : "memory"
+    );
+    */
+
 void *rowhammer(void *input)
 {
 	struct thread_args *args = input;
