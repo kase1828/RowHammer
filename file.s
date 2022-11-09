@@ -1,200 +1,226 @@
-	.section	__TEXT,__text,regular,pure_instructions
-	.build_version macos, 13, 0	sdk_version 13, 0
-	.globl	_rowhammer                      ; -- Begin function rowhammer
-	.p2align	2
-_rowhammer:                             ; @rowhammer
-	.cfi_startproc
-; %bb.0:
-	sub	sp, sp, #16
-	.cfi_def_cfa_offset 16
-	str	x0, [sp, #8]
-	ldr	x8, [sp, #8]
-	str	x8, [sp]
-	ldr	x9, [sp]
-	; InlineAsm Start
-	mov	x9, x8	;
-	; InlineAsm End
-	str	x8, [x9]
-	ldr	x9, [sp]
-	; InlineAsm Start
-	mov	x10, x8	;
-	; InlineAsm End
-	str	x8, [x9, #8]
-	b	LBB0_1
-LBB0_1:                                 ; =>This Inner Loop Header: Depth=1
-	; InlineAsm Start
-	str	x0, [x9]
-	str	x0, [x10]
-	dc	cvac, x9
-	dc	cvac, x10
-	; InlineAsm End
-	b	LBB0_1
-	.cfi_endproc
-                                        ; -- End function
-	.globl	_check                          ; -- Begin function check
-	.p2align	2
-_check:                                 ; @check
-	.cfi_startproc
-; %bb.0:
-	sub	sp, sp, #48
-	stp	x29, x30, [sp, #32]             ; 16-byte Folded Spill
-	add	x29, sp, #32
-	.cfi_def_cfa w29, 16
-	.cfi_offset w30, -8
-	.cfi_offset w29, -16
-	stur	x0, [x29, #-8]
-	mov	w0, #1
-	bl	_sleep
-	ldur	x8, [x29, #-8]
-	str	x8, [sp, #16]
-	str	wzr, [sp, #12]
-	b	LBB1_1
-LBB1_1:                                 ; =>This Inner Loop Header: Depth=1
-	ldr	w8, [sp, #12]
-	subs	w8, w8, #17
-	b.ge	LBB1_4
-	b	LBB1_2
-LBB1_2:                                 ;   in Loop: Header=BB1_1 Depth=1
-	ldr	x8, [sp, #16]
-	ldr	x8, [x8]
-	subs	x8, x8, #32
-	ldrsw	x9, [sp, #12]
-	ldr	w8, [x8, x9, lsl #2]
-	ldr	x9, [sp, #16]
-	add	x9, x9, #16
-	ldrsw	x10, [sp, #12]
-	str	w8, [x9, x10, lsl #2]
-	b	LBB1_3
-LBB1_3:                                 ;   in Loop: Header=BB1_1 Depth=1
-	ldr	w8, [sp, #12]
-	add	w8, w8, #1
-	str	w8, [sp, #12]
-	b	LBB1_1
-LBB1_4:
-	adrp	x0, l_.str@PAGE
-	add	x0, x0, l_.str@PAGEOFF
-	bl	_printf
-	b	LBB1_5
-LBB1_5:                                 ; =>This Loop Header: Depth=1
-                                        ;     Child Loop BB1_6 Depth 2
-	str	wzr, [sp, #8]
-	b	LBB1_6
-LBB1_6:                                 ;   Parent Loop BB1_5 Depth=1
-                                        ; =>  This Inner Loop Header: Depth=2
-	ldr	w8, [sp, #8]
-	subs	w8, w8, #17
-	b.ge	LBB1_11
-	b	LBB1_7
-LBB1_7:                                 ;   in Loop: Header=BB1_6 Depth=2
-	ldr	x8, [sp, #16]
-	ldr	x8, [x8]
-	subs	x8, x8, #32
-	ldrsw	x9, [sp, #8]
-	ldr	w8, [x8, x9, lsl #2]
-	ldr	x9, [sp, #16]
-	add	x9, x9, #16
-	ldrsw	x10, [sp, #8]
-	ldr	w9, [x9, x10, lsl #2]
-	subs	w8, w8, w9
-	b.eq	LBB1_9
-	b	LBB1_8
-LBB1_8:
-	mov	x0, #0
-	ldp	x29, x30, [sp, #32]             ; 16-byte Folded Reload
-	add	sp, sp, #48
-	ret
-LBB1_9:                                 ;   in Loop: Header=BB1_6 Depth=2
-	b	LBB1_10
-LBB1_10:                                ;   in Loop: Header=BB1_6 Depth=2
-	ldr	w8, [sp, #8]
-	add	w8, w8, #1
-	str	w8, [sp, #8]
-	b	LBB1_6
-LBB1_11:                                ;   in Loop: Header=BB1_5 Depth=1
-	b	LBB1_5
-	.cfi_endproc
-                                        ; -- End function
-	.globl	_main                           ; -- Begin function main
-	.p2align	2
-_main:                                  ; @main
-	.cfi_startproc
-; %bb.0:
-	sub	sp, sp, #96
-	stp	x29, x30, [sp, #80]             ; 16-byte Folded Spill
-	add	x29, sp, #80
-	.cfi_def_cfa w29, 16
-	.cfi_offset w30, -8
-	.cfi_offset w29, -16
-	mov	w8, #0
-	str	w8, [sp, #36]                   ; 4-byte Folded Spill
-	stur	wzr, [x29, #-4]
-	adrp	x0, l_.str.1@PAGE
-	add	x0, x0, l_.str.1@PAGEOFF
-	bl	_printf
-	sub	x8, x29, #8
-	str	x8, [sp, #8]                    ; 8-byte Folded Spill
-	mov	w8, #5
-	stur	w8, [x29, #-8]
-	sub	x8, x29, #12
-	str	x8, [sp, #16]                   ; 8-byte Folded Spill
-	mov	w8, #7
-	stur	w8, [x29, #-12]
-	mov	x0, #88
-	bl	_malloc
-	ldr	x9, [sp, #8]                    ; 8-byte Folded Reload
-	ldr	x8, [sp, #16]                   ; 8-byte Folded Reload
-	stur	x0, [x29, #-24]
-	ldur	x10, [x29, #-24]
-	str	x9, [x10]
-	ldur	x9, [x29, #-24]
-	str	x8, [x9, #8]
-	ldur	x3, [x29, #-24]
-	sub	x0, x29, #32
-	mov	x1, #0
-	str	x1, [sp, #24]                   ; 8-byte Folded Spill
-	adrp	x2, _rowhammer@PAGE
-	add	x2, x2, _rowhammer@PAGEOFF
-	bl	_pthread_create
-	adrp	x0, l_.str.2@PAGE
-	add	x0, x0, l_.str.2@PAGEOFF
-	bl	_printf
-	ldr	x1, [sp, #24]                   ; 8-byte Folded Reload
-	ldur	x3, [x29, #-24]
-	add	x0, sp, #40
-	adrp	x2, _check@PAGE
-	add	x2, x2, _check@PAGEOFF
-	bl	_pthread_create
-	ldr	x1, [sp, #24]                   ; 8-byte Folded Reload
-	ldr	x0, [sp, #40]
-	bl	_pthread_join
-	adrp	x0, l_.str.3@PAGE
-	add	x0, x0, l_.str.3@PAGEOFF
-	bl	_printf
-	ldur	x0, [x29, #-32]
-	bl	_pthread_cancel
-	adrp	x0, l_.str.4@PAGE
-	add	x0, x0, l_.str.4@PAGEOFF
-	bl	_printf
-	ldr	w0, [sp, #36]                   ; 4-byte Folded Reload
-	ldp	x29, x30, [sp, #80]             ; 16-byte Folded Reload
-	add	sp, sp, #96
-	ret
-	.cfi_endproc
-                                        ; -- End function
-	.section	__TEXT,__cstring,cstring_literals
-l_.str:                                 ; @.str
-	.asciz	"searcing...\n"
+	.arch armv6
+	.eabi_attribute 28, 1
+	.eabi_attribute 20, 1
+	.eabi_attribute 21, 1
+	.eabi_attribute 23, 3
+	.eabi_attribute 24, 1
+	.eabi_attribute 25, 1
+	.eabi_attribute 26, 2
+	.eabi_attribute 30, 6
+	.eabi_attribute 34, 1
+	.eabi_attribute 18, 4
+	.file	"file.c"
+	.text
+	.align	2
+	.global	rowhammer
+	.arch armv6
+	.syntax unified
+	.arm
+	.fpu vfp
+	.type	rowhammer, %function
+rowhammer:
+	@ args = 0, pretend = 0, frame = 16
+	@ frame_needed = 1, uses_anonymous_args = 0
+	@ link register save eliminated.
+	str	fp, [sp, #-4]!
+	add	fp, sp, #0
+	sub	sp, sp, #20
+	str	r0, [fp, #-16]
+	ldr	r3, [fp, #-16]
+	str	r3, [fp, #-8]
+	.syntax divided
+@ 18 "file.c" 1
+	mov r0, r2;
+@ 0 "" 2
+	.arm
+	.syntax unified
+	ldr	r3, [fp, #-8]
+	str	r2, [r3]
+	.syntax divided
+@ 23 "file.c" 1
+	mov r1, r2;
+@ 0 "" 2
+	.arm
+	.syntax unified
+	ldr	r3, [fp, #-8]
+	str	r2, [r3, #4]
+.L2:
+	.syntax divided
+@ 30 "file.c" 1
+	STR r2, [%0]	
+STR r1, [%1]	
+DC CVAC, r0	
+DC CVAC, r1	
 
-l_.str.1:                               ; @.str.1
-	.asciz	"starting...\n"
-
-l_.str.2:                               ; @.str.2
-	.asciz	"hammering...\n"
-
-l_.str.3:                               ; @.str.3
-	.asciz	"read disturb found\n"
-
-l_.str.4:                               ; @.str.4
-	.asciz	"exiting...\n"
-
-.subsections_via_symbols
+@ 0 "" 2
+	.arm
+	.syntax unified
+	b	.L2
+	.size	rowhammer, .-rowhammer
+	.section	.rodata
+	.align	2
+.LC0:
+	.ascii	"searcing...\000"
+	.text
+	.align	2
+	.global	check
+	.syntax unified
+	.arm
+	.fpu vfp
+	.type	check, %function
+check:
+	@ args = 0, pretend = 0, frame = 24
+	@ frame_needed = 1, uses_anonymous_args = 0
+	push	{fp, lr}
+	add	fp, sp, #4
+	sub	sp, sp, #24
+	str	r0, [fp, #-24]
+	mov	r0, #1
+	bl	sleep
+	ldr	r3, [fp, #-24]
+	str	r3, [fp, #-16]
+	mov	r3, #0
+	str	r3, [fp, #-8]
+	b	.L4
+.L5:
+	ldr	r3, [fp, #-16]
+	ldr	r2, [r3]
+	ldr	r3, [fp, #-8]
+	sub	r3, r3, #-1073741816
+	lsl	r3, r3, #2
+	add	r3, r2, r3
+	ldr	r1, [r3]
+	ldr	r3, [fp, #-16]
+	ldr	r2, [fp, #-8]
+	add	r2, r2, #2
+	str	r1, [r3, r2, lsl #2]
+	ldr	r3, [fp, #-8]
+	add	r3, r3, #1
+	str	r3, [fp, #-8]
+.L4:
+	ldr	r3, [fp, #-8]
+	cmp	r3, #16
+	ble	.L5
+	ldr	r0, .L12
+	bl	puts
+.L10:
+	mov	r3, #0
+	str	r3, [fp, #-12]
+	b	.L6
+.L9:
+	ldr	r3, [fp, #-16]
+	ldr	r2, [r3]
+	ldr	r3, [fp, #-12]
+	sub	r3, r3, #-1073741816
+	lsl	r3, r3, #2
+	add	r3, r2, r3
+	ldr	r2, [r3]
+	ldr	r3, [fp, #-16]
+	ldr	r1, [fp, #-12]
+	add	r1, r1, #2
+	ldr	r3, [r3, r1, lsl #2]
+	cmp	r2, r3
+	beq	.L7
+	mov	r3, #0
+	b	.L11
+.L7:
+	ldr	r3, [fp, #-12]
+	add	r3, r3, #1
+	str	r3, [fp, #-12]
+.L6:
+	ldr	r3, [fp, #-12]
+	cmp	r3, #16
+	ble	.L9
+	b	.L10
+.L11:
+	mov	r0, r3
+	sub	sp, fp, #4
+	@ sp needed
+	pop	{fp, pc}
+.L13:
+	.align	2
+.L12:
+	.word	.LC0
+	.size	check, .-check
+	.section	.rodata
+	.align	2
+.LC1:
+	.ascii	"starting...\000"
+	.align	2
+.LC2:
+	.ascii	"hammering...\000"
+	.align	2
+.LC3:
+	.ascii	"read disturb found\000"
+	.align	2
+.LC4:
+	.ascii	"exiting...\000"
+	.text
+	.align	2
+	.global	main
+	.syntax unified
+	.arm
+	.fpu vfp
+	.type	main, %function
+main:
+	@ args = 0, pretend = 0, frame = 24
+	@ frame_needed = 1, uses_anonymous_args = 0
+	push	{fp, lr}
+	add	fp, sp, #4
+	sub	sp, sp, #24
+	ldr	r0, .L16
+	bl	puts
+	mov	r3, #5
+	str	r3, [fp, #-12]
+	mov	r3, #7
+	str	r3, [fp, #-16]
+	mov	r0, #76
+	bl	malloc
+	mov	r3, r0
+	str	r3, [fp, #-8]
+	ldr	r3, [fp, #-8]
+	sub	r2, fp, #12
+	str	r2, [r3]
+	ldr	r3, [fp, #-8]
+	sub	r2, fp, #16
+	str	r2, [r3, #4]
+	sub	r0, fp, #20
+	ldr	r3, [fp, #-8]
+	ldr	r2, .L16+4
+	mov	r1, #0
+	bl	pthread_create
+	ldr	r0, .L16+8
+	bl	puts
+	sub	r0, fp, #24
+	ldr	r3, [fp, #-8]
+	ldr	r2, .L16+12
+	mov	r1, #0
+	bl	pthread_create
+	ldr	r3, [fp, #-24]
+	mov	r1, #0
+	mov	r0, r3
+	bl	pthread_join
+	ldr	r0, .L16+16
+	bl	puts
+	ldr	r3, [fp, #-20]
+	mov	r0, r3
+	bl	pthread_cancel
+	ldr	r0, .L16+20
+	bl	puts
+	mov	r3, #0
+	mov	r0, r3
+	sub	sp, fp, #4
+	@ sp needed
+	pop	{fp, pc}
+.L17:
+	.align	2
+.L16:
+	.word	.LC1
+	.word	rowhammer
+	.word	.LC2
+	.word	check
+	.word	.LC3
+	.word	.LC4
+	.size	main, .-main
+	.ident	"GCC: (Raspbian 10.2.1-6+rpi1) 10.2.1 20210110"
+	.section	.note.GNU-stack,"",%progbits

@@ -15,12 +15,14 @@ void *rowhammer(void *input)
 {
 	struct thread_args *args = input;
 
-	asm volatile ("mov x9, %0;"
+	unsigned long temp = -1;
+
+	asm volatile ("mov r0, %0;"
 	:"=r"(args->addr1)
 	:
 	:);
 
-	asm volatile ("mov x10, %0;"
+	asm volatile ("mov r1, %0;"
 	:"=r"(args->addr2)
 	:
 	:);
@@ -28,11 +30,12 @@ void *rowhammer(void *input)
 	while(1) {
 
 		asm volatile (
-			"STR X0, [X9]\t\n"
-			"STR X0, [X10]\t\n"
-			"DC CVAC, X9\t\n"
-			"DC CVAC, X10"
+			"STR %2, [%0]\t\n"
+			"STR %2, [%1]\t\n"
+			"DC , %0\t\n"
+			"DC , %1"
 			//"DSB 0xB"
+			::"r" (args->addr1), "r" (args->addr2), "r" (temp)
 		);
 
 	}
