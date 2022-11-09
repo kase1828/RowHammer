@@ -3,6 +3,8 @@
 #include <unistd.h>
 #include <pthread.h>
 
+#define SCTLR_EL1_UCI	BIT(26)
+
 struct thread_args {
 
 	int *addr1;
@@ -25,8 +27,9 @@ void *rowhammer(void *input)
 {
 	struct thread_args *args = input;
 
+	/*
 	unsigned long temp = -1;
-
+	
 	asm volatile ("mov r0, %0;"
 	:"=r"(args->addr1)
 	:
@@ -48,6 +51,20 @@ void *rowhammer(void *input)
 			::"r" (args->addr1), "r" (args->addr2), "r" (temp)
 		);
 
+	}*/
+
+	asm volatile(
+          "dc civac, %0\n\t"
+          "dc civac, %1\n\t"
+          ::"r" (args->addr1), "r" (args->addr2)
+        );
+        while(1) {
+          asm volatile(
+            "dc zva, %0\n\t"
+            "dc zva, %1\n\t"
+            //"dsb 0xb"
+            ::"r" (args->addr1), "r" (args->addr2)
+          );
 	}
 
 	return 0;
