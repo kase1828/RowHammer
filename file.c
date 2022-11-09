@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <pthread.h>
+#define _GNU_SOURCE
 
-#define SCTLR_EL1_UCI	BIT(26)
+//#define SCTLR_EL1_UCI	BIT(26)
 
 struct thread_args {
 
@@ -16,7 +17,7 @@ struct thread_args {
 /*
 __asm__ __volatile__
     (
-      "\tmrc p15, 0, %0, c1, c0, 0\n"
+      "\tmrc p15, 0, %0, c1, c0, 1\n"
       : "=r" (sctlr)
       :
       : "memory"
@@ -26,6 +27,8 @@ __asm__ __volatile__
 void *rowhammer(void *input)
 {
 	struct thread_args *args = input;
+
+	//asm volatile ("mcr p15, 0, r1, c1, c0, 0");
 
 	/*
 	unsigned long temp = -1;
@@ -93,6 +96,13 @@ void *check(void *input)
 int main()
 {
 	printf("starting...\n");
+
+	asm volatile (
+		"mrs r1, sctlr_el1\t\n"
+		"ldr r2, = 0x1000\t\n"
+		"orr r1, r1, r2\t\n"
+		"msr sctlr_el1, r1"
+	); 
 
 	int x = 5;
 	int y = 7; 
