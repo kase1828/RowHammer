@@ -24,23 +24,10 @@ struct thread_args {
 	int nums17[17];
 };
 
-/*
-__asm__ __volatile__
-    (
-      "\tmrc p15, 0, %0, c1, c0, 1\n"
-      : "=r" (sctlr)
-      :
-      : "memory"
-    );
-    */
-
 void *rowhammer(void *input)
 {
 	struct thread_args *args = input;
 
-	//asm volatile ("mcr p15, 0, r1, c1, c0, 0");
-
-	/*
 	unsigned long temp = -1;
 	
 	asm volatile ("mov r0, %0;"
@@ -58,14 +45,13 @@ void *rowhammer(void *input)
 		asm volatile (
 			"STR %2, [%0]\t\n"
 			"STR %2, [%1]\t\n"
-			"DC , %0\t\n"
-			"DC , %1"
+			"DC CVAC, %0\t\n"
+			"DC CVAC, %1"
 			//"DSB 0xB"
 			::"r" (args->addr1), "r" (args->addr2), "r" (temp)
 		);
-
-	}*/
-
+	}
+/*
 	asm volatile(
           "dc civac, %0\n\t"
           "dc civac, %1\n\t"
@@ -79,6 +65,7 @@ void *rowhammer(void *input)
             ::"r" (args->addr1), "r" (args->addr2)
           );
 	}
+*/
 
 	return 0;
 }
@@ -107,12 +94,12 @@ int main()
 {
 	printf("starting...\n");
 
-	asm volatile (
+	/*asm volatile (
 		"mrs r1, sctlr_el1\t\n"
 		"ldr r2, = 0x1000\t\n"
 		"orr r1, r1, r2\t\n"
 		"msr sctlr_el1, r1"
-	); 
+	);*/ 
 
 	int x = 5;
 	int y = 7; 
