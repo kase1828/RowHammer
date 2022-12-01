@@ -4,7 +4,6 @@
 #include <pthread.h>
 #include <stdio.h>
 #include <string.h> 
-#include <linux/perf_event.h>
 #include <sys/syscall.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -27,7 +26,7 @@ struct thread_args {
 void *rowhammer(void *input)
 {
 	struct thread_args *args = input;
-
+/*
 	unsigned long temp = -1;
 	
 	asm volatile ("mov r0, %0;"
@@ -51,7 +50,7 @@ void *rowhammer(void *input)
 			::"r" (args->addr1), "r" (args->addr2), "r" (temp)
 		);
 	}
-/*
+*/
 	asm volatile(
           "dc civac, %0\n\t"
           "dc civac, %1\n\t"
@@ -65,7 +64,6 @@ void *rowhammer(void *input)
             ::"r" (args->addr1), "r" (args->addr2)
           );
 	}
-*/
 
 	return 0;
 }
