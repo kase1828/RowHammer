@@ -51,6 +51,20 @@ void *rowhammer(void *input)
 		);
 	}
 */
+	char *cache = malloc(CACHE_SIZE);
+	
+	if (cache == NULL) {
+		printf("Error: failed to allocate memory\n");
+		return 1;
+	}
+
+	memset(cache, 0xFF, CACHE_SIZE); // Fill the cache with 0xFF's
+
+	printf("Cache filled successfully\n");
+	
+	free(cache);
+	return 0;
+	
 	asm volatile(
           "dc civac, %0\n\t"
           "dc civac, %1\n\t"
