@@ -15,6 +15,8 @@
 
 //#define SCTLR_EL1_UCI	BIT(26)
 
+#define CACHE_SIZE (1024 * 1024) // 1MB
+
 struct thread_args {
 
 	int *addr1;
@@ -55,7 +57,7 @@ void *rowhammer(void *input)
 	
 	if (cache == NULL) {
 		printf("Error: failed to allocate memory\n");
-		return 1;
+		return 0;
 	}
 
 	memset(cache, 0xFF, CACHE_SIZE); // Fill the cache with 0xFF's
@@ -63,7 +65,6 @@ void *rowhammer(void *input)
 	printf("Cache filled successfully\n");
 	
 	free(cache);
-	return 0;
 	
 	asm volatile(
           "dc civac, %0\n\t"
