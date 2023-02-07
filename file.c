@@ -58,25 +58,27 @@ void *rowhammer(void *input)
 		asm volatile(
 			"str %2, [%0]\n\t"
 			"str %2, [%1]\n\t"
-			"dc cvac, %0\n\t"
-			"dc cvac, %1\n\t"
+			//"dc cvac, %0\n\t"
+			//"dc cvac, %1\n\t"
 			::"r"(args->addr1), "r"(args->addr2), "r"(temp)
 		);
+
+		char *cache = malloc(CACHE_SIZE);
+		
+		if (cache == NULL) {
+			printf("Error: failed to allocate memory\n");
+			return 0;
+		}
+
+		memset(cache, 0xFF, CACHE_SIZE); // Fill the cache with 0xFF's
+
+		printf("Cache filled successfully\n");
+		
+		free(cache);
+		
 	}
 
-	char *cache = malloc(CACHE_SIZE);
-	
-	if (cache == NULL) {
-		printf("Error: failed to allocate memory\n");
-		return 0;
-	}
-
-	memset(cache, 0xFF, CACHE_SIZE); // Fill the cache with 0xFF's
-
-	printf("Cache filled successfully\n");
-	
-	free(cache);
-	
+/*
 	asm volatile(
           "dc civac, %0\n\t"
           "dc civac, %1\n\t"
@@ -90,7 +92,7 @@ void *rowhammer(void *input)
             ::"r" (args->addr1), "r" (args->addr2)
           );
 	}
-
+*/
 	return 0;
 }
 
