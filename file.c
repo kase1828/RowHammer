@@ -30,7 +30,6 @@ void *rowhammer(void *input)
 	struct thread_args *args = input;
 	unsigned long temp = -1;
 	
-/*
 	asm volatile ("mov r0, %0;"
 	:"=r"(args->addr1)
 	:
@@ -41,6 +40,7 @@ void *rowhammer(void *input)
 	:
 	:);
 
+/*
 	while(1) {
 
 		asm volatile (
@@ -108,9 +108,10 @@ void *check(void *input)
 	printf("searching...\n");
 	while(1) {
 
-		for (int i = 0; i < 17; i++) {
-			if ((int) *(args->addr1 - 8 + i) != args->nums17[i]) return 0;
-		}
+		//for (int i = 0; i < 17; i++) {
+		//	if ((int) *(args->addr1 - 8 + i) != args->nums17[i]) return 0;
+		//}
+		sleep(1);
 	}
 
 	return 0;
