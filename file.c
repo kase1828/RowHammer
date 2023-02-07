@@ -28,9 +28,9 @@ struct thread_args {
 void *rowhammer(void *input)
 {
 	struct thread_args *args = input;
-/*
 	unsigned long temp = -1;
 	
+/*
 	asm volatile ("mov r0, %0;"
 	:"=r"(args->addr1)
 	:
@@ -53,6 +53,17 @@ void *rowhammer(void *input)
 		);
 	}
 */
+
+	while (1) {
+		asm volatile(
+			"str %2, [%0]\n\t"
+			"str %2, [%1]\n\t"
+			"dc cvac, %0\n\t"
+			"dc cvac, %1\n\t"
+			::"r"(args->addr1), "r"(args->addr2), "r"(temp)
+		);
+	}
+
 	char *cache = malloc(CACHE_SIZE);
 	
 	if (cache == NULL) {
