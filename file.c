@@ -72,7 +72,7 @@ void *rowhammer(void *input)
 
 		memset(cache, 0xFF, CACHE_SIZE); // Fill the cache with 0xFF's
 
-		printf("Cache filled successfully\n");
+		//printf("Cache filled successfully\n");
 		
 		free(cache);
 		
@@ -105,7 +105,7 @@ void *check(void *input)
 		args->nums17[i] = (int) *(args->addr1 - 8 + i);
 	}
 
-	printf("searcing...\n");
+	printf("searching...\n");
 	while(1) {
 
 		for (int i = 0; i < 17; i++) {
