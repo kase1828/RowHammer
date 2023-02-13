@@ -72,7 +72,7 @@ void *rowhammer(void *input)
 
 		memset(cache, 0xFF, CACHE_SIZE); // Fill the cache with 0xFF's
 
-		//printf("Cache filled successfully\n");
+		printf("Cache filled successfully\n");
 		
 		free(cache);
 		
