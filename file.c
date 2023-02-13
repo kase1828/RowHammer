@@ -29,7 +29,11 @@ void *rowhammer(void *input)
 {
 	struct thread_args *args = input;
 	unsigned long temp = -1;
-	
+
+	printf("%x\n",args->addr1);
+
+	asm volatile("LDR R1, =#7eada238\n\t");
+/*	
 	asm volatile ("mov r0, %0;"
 	:"=r"(args->addr1)
 	:
@@ -39,7 +43,7 @@ void *rowhammer(void *input)
 	:"=r"(args->addr2)
 	:
 	:);
-
+*/
 /*
 	while(1) {
 
@@ -108,11 +112,10 @@ void *check(void *input)
 	printf("searching...\n");
 	while(1) {
 
-		//for (int i = 0; i < 17; i++) {
-		//	if ((int) *(args->addr1 - 8 + i) != args->nums17[i]) return 0;
-		//}
-		sleep(1);
-	}
+		for (int i = 0; i < 17; i++) {
+			if ((int) *(args->addr1 - 8 + i) != args->nums17[i]) return 0;
+		}	
+	}	
 
 	return 0;
 }
