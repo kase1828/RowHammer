@@ -17,24 +17,47 @@
 
 int main() {
 
-	int a = 5;
+	printf("start\n");
+	int num = 5;
+	printf("start\n");
+	int a[CACHE_SIZE]; 
 
-	/*char *cache = malloc(CACHE_SIZE);
+//	char *cache = malloc(CACHE_SIZE);
 
-	if (cache == NULL) {
-		printf("Error: failed to allocate memory\n");
-		return 0;
+//	if (cache == NULL) {
+//		printf("Error: failed to allocate memory\n");
+//		return 0;
+//	}
+
+	//memset(cache, 0xFF, CACHE_SIZE); // Fill the cache with 0xFF's
+/*
+	printf("loop\n");
+
+	for (int i = 0; i < CACHE_SIZE; i++) {
+		a[i] = i;	
 	}
 
-	memset(cache, 0xFF, CACHE_SIZE); // Fill the cache with 0xFF's
+	int b;
+
+	for (int i = 0; i < CACHE_SIZE; i++) {
+		b = a[i];	
+	}
+
 
 	printf("Cache filled successfully\n");
+*/
+//	free(cache);
 
-	free(cache);*/
+	usleep(10);
+
+	int z;
+	z = num;
+
+	int x;
 
 	clock_t begin = clock();
 
-	printf("a: %d\n",a);
+	x = num;
 
 	clock_t end = clock();
         double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
