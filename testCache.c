@@ -13,7 +13,7 @@
 #include <pthread.h>
 #define _GNU_SOURCE
 
-#define CACHE_SIZE (1024 * 1024) // 1MB
+#define CACHE_SIZE (1024 * 1024 * 4) // 1MB
 
 #define N (1024*4)
 
