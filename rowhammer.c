@@ -73,10 +73,10 @@ int main()
 {
 	printf("starting...\n");
 
-	void *mem_block = mmap(NULL, 1500, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
+	void *mem_block = mmap(NULL, 0x1000, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
 
-	void *addr_x = (void*) (mem_block+1500/2);
-	void *addr_y = (void*) (mem_block+1500/3); 
+	void *addr_x = (void*) (mem_block+0x1000/2);
+	void *addr_y = (void*) (mem_block+0x1000/3); 
 
 	struct thread_args *args = malloc (sizeof (struct thread_args));
 	args->addr1 = &addr_x;
