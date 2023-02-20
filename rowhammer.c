@@ -38,15 +38,15 @@ void *rowhammer(void *input)
 	int num;
 
 	printf("hammering...\n");
-	while (1) {
+	for (int i = 0; i < 10000; i++) {
 		asm volatile(
 			"ldr %2, [%0]\n\t"
 			"ldr %2, [%1]\n\t"
 			::"r"(args->addr1), "r"(args->addr2), "r"(temp)
 		);
 
-		for (int i = 0; i < CACHE_SIZE; i++) {
-			num = fill[i];       
+		for (int j = 0; j < CACHE_SIZE; j++) {
+			num = fill[j];       
 		}
 	}
 
@@ -87,13 +87,12 @@ int main()
 	pthread_t pthread_check;
 
 	pthread_create(&pthread_hammer, NULL, rowhammer, args);
+	pthread_join(pthread_hammer, NULL);
 
 	pthread_create(&pthread_check, NULL, check, args);
-
 	pthread_join(pthread_check, NULL);
 	printf("read disturb found\n");
 
-	pthread_cancel(pthread_hammer);
 	printf("exiting...\n");
 
 	return 0;
