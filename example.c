@@ -13,6 +13,7 @@
 
 #define ROUND 140000
 #define HAMMER_ROUND 140000        // the number of cpu cycle between 2 subsequent memory refresh
+#define CACHE_SIZE (1024 * 1024)
 
 int mapping_size = 0x1000;
 
@@ -84,29 +85,19 @@ int main(){
         //The number of effective cycle for the program to run, e.g. how many refresh cycles should we test
         cycles = HAMMER_ROUND * number_of_cycles;
 
+	int *fill = malloc(CACHE_SIZE);
+
         switch (selection)
         {
         case 1:
-	    int *fill = malloc(CACHE_SIZE);
 
-        for (int i = 0; i < CACHE_SIZE / 4; i++) {
-                fill[i] = i;
-        }
+	    for (int i = 0; i < CACHE_SIZE / 4; i++) {
+	    	fill[i] = i;
+	    }
 
-        int num;
+	    int num;
 
-        printf("hammering...\n");
-        for (int i = 0; i < 10000; i++) {
-                asm volatile(
-                        "ldr %2, [%0]\n\t"
-                        "ldr %2, [%1]\n\t"
-                        ::"r"(args->addr1), "r"(args->addr2), "r"(temp)
-                );
-
-                for (int j = 0; j < CACHE_SIZE / 4; j++) {
-                        num = fill[j];
-                }
-        }
+	    printf("hammering...\n");
  
             for (j = 0; j < cycles; ++j) {
                 asm volatile(
@@ -116,6 +107,9 @@ int main(){
                     "dc zva, %1\n\t"
                     ::"r" (addr1), "r" (addr2), "r" (temporary)
               );
+		for (int j = 0; j < CACHE_SIZE / 4; j++) {
+                        num = fill[j];
+                }
             }
             break;
 
