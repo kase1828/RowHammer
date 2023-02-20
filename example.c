@@ -87,6 +87,27 @@ int main(){
         switch (selection)
         {
         case 1:
+	    int *fill = malloc(CACHE_SIZE);
+
+        for (int i = 0; i < CACHE_SIZE / 4; i++) {
+                fill[i] = i;
+        }
+
+        int num;
+
+        printf("hammering...\n");
+        for (int i = 0; i < 10000; i++) {
+                asm volatile(
+                        "ldr %2, [%0]\n\t"
+                        "ldr %2, [%1]\n\t"
+                        ::"r"(args->addr1), "r"(args->addr2), "r"(temp)
+                );
+
+                for (int j = 0; j < CACHE_SIZE / 4; j++) {
+                        num = fill[j];
+                }
+        }
+ 
             for (j = 0; j < cycles; ++j) {
                 asm volatile(
                     "str %2, [%0]\n\t"
