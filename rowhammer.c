@@ -45,7 +45,7 @@ void *rowhammer(void *input)
 			::"r"(args->addr1), "r"(args->addr2), "r"(temp)
 		);
 
-		for (int j = 0; j < CACHE_SIZE; j++) {
+		for (int j = 0; j < CACHE_SIZE / 4; j++) {
 			num = fill[j];       
 		}
 	}
