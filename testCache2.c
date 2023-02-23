@@ -28,13 +28,13 @@ int main() {
 	begin = clock();
 
 	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
-                a[i] = -i;
+                a[i] = i;
         }
 
         end = clock();
         time_spent = (double)(end - begin);
 
-	printf("fill a: %f\n",time_spent);
+	printf("fill a with i:  %f\n",time_spent);
 
 	begin = clock();
 
@@ -45,51 +45,51 @@ int main() {
         end = clock();
         time_spent = (double)(end - begin);
 
-	printf("read a: %f\n",time_spent);
+	printf("fill b with a:  %f\n",time_spent);
 
 	begin = clock();
 
 	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
-                c[i] = -i;
+                c[i] = a[i];
         }
 
         end = clock();
         time_spent = (double)(end - begin);
 
-	printf("fill c: %f\n",time_spent);
+	printf("fill c with a:  %f\n",time_spent);
 
 	begin = clock();
 
 	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
-                d[i] = a[i];
+                d[i] = -i;
         }
 
         end = clock();
         time_spent = (double)(end - begin);
 
-	printf("read a: %f\n",time_spent);
+	printf("fill d with -i: %f\n",time_spent);
 
 	begin = clock();
 
 	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
-                e[i] = -i;
+                e[i] = d[i];
         }
 
         end = clock();
         time_spent = (double)(end - begin);
 
-	printf("fill e: %f\n",time_spent);
+	printf("fill e with d:  %f\n",time_spent);
 
 	begin = clock();
 
 	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
-                f[i] = e[i];
+                f[i] = a[i];
         }
 
         end = clock();
         time_spent = (double)(end - begin);
 
-	printf("read e: %f\n",time_spent);
+	printf("fill f with a:  %f\n",time_spent);
 
 	return 0;
 }
