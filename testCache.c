@@ -13,16 +13,16 @@
 #include <pthread.h>
 #define _GNU_SOURCE
 
-#define CACHE_SIZE (1024 * 1024 * 4) // 1MB
+#define CACHE_SIZE (1024 * 1024) // 1MB
 
 #define N (1024*4)
 
 int main() {
 
 	printf("start\n");
-	int num = 5;
+	int num = 5; // NOTE big array instead
 	printf("start\n");
-	int a[CACHE_SIZE]; 
+	int a[CACHE_SIZE]; // NOTE uint64
 
 //	char *cache = malloc(CACHE_SIZE);
 
@@ -35,13 +35,13 @@ int main() {
 
 	printf("loop\n");
 
-	for (int i = 0; i < CACHE_SIZE; i++) {
+	for (int i = 0; i < CACHE_SIZE; i++) { // NOTE i+8
 		a[i] = i;	
 	}
 
 	int b;
 
-	for (int i = 0; i < CACHE_SIZE; i++) {
+	for (int i = 0; i < CACHE_SIZE; i++) { // NOTE a b a
 		b = a[i];	
 	}
 
@@ -62,7 +62,7 @@ int main() {
 	x = num;
 
 	clock_t end = clock();
-        double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+        double time_spent = (double)(end - begin) / CLOCKS_PER_SEC; // NOTE what is clocks_per_sec
 
 	printf("time spent: %f\n",time_spent);
 
