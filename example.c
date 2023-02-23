@@ -53,7 +53,7 @@ int main(){
     printf("cache access time: %lf s\n", (double)(end-begin)/CLOCKS_PER_SEC);
 
     printf("Timing of repeated access to same memory location flushing the cache:\n");
-
+/*
     begin = clock();
     for (j = 0; j < ROUND; ++j) {
     asm volatile(
@@ -66,7 +66,7 @@ int main(){
     }
     end = clock();
     printf("memory access time: %lf s\n", (double)(end-begin)/CLOCKS_PER_SEC);
-
+*/
 
     /*start of actual hammer program*/
     while (1){
@@ -103,8 +103,6 @@ int main(){
                 asm volatile(
                     "str %2, [%0]\n\t"
                     "str %2, [%1]\n\t"
-                    "dc zva, %0\n\t"
-                    "dc zva, %1\n\t"
                     ::"r" (addr1), "r" (addr2), "r" (temporary)
               );
 		for (int j = 0; j < CACHE_SIZE / 4; j++) {
@@ -112,7 +110,7 @@ int main(){
                 }
             }
             break;
-
+/*
 
         case 2:
             for (j = 0; j < cycles; ++j) {
@@ -137,6 +135,7 @@ int main(){
               );
             }
              break;
+*/
         default:
                 printf("Invalid choice.\n");
                 return 1;
