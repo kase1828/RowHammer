@@ -16,15 +16,20 @@ int main() {
 
 	u_int64_t a[1024 * 1024 / 8];
 	u_int64_t b[1024 * 1024 / 8];
+	u_int64_t c[1024 * 1024 / 8];
 
-	clock_t begin = clock();
+	clock_t begin;
+	clock_t end;
+	double time_spent;
+
+	begin = clock();
 
 	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
                 a[i] = i;
         }
 
-        clock_t end = clock();
-        double time_spent = (double)(end - begin);
+        end = clock();
+        time_spent = (double)(end - begin);
 
 	printf("fill a: %f\n",time_spent);
 
@@ -53,13 +58,13 @@ int main() {
 	begin = clock();
 
 	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
-                b[i] = a[i];
+                c[i] = a[i];
         }
 
         end = clock();
         time_spent = (double)(end - begin);
 
-	printf("time spent a: %f\n",time_spent);
+	printf("read a: %f\n",time_spent);
 
 	return 0;
 }
