@@ -21,18 +21,25 @@ int main() {
 	uint64_t a[CACHE_SIZE * 8];
 	uint64_t b[CACHE_SIZE * 8];
 
+	clock_t begin = clock();
+
 	for (uint64_t i = 0; i < CACHE_SIZE * 8; i = i+8) {
                 a[i] = i;
         }
 
-	clock_t begin = clock();
+        clock_t end = clock();
+        double time_spent = (double)(end - begin);
+
+	printf("time spent b: %f\n",time_spent);
+
+	begin = clock();
 
 	for (uint64_t i = 0; i < CACHE_SIZE * 8; i = i+8) {
                 b[i] = i;
         }
 
-        clock_t end = clock();
-        double time_spent = (double)(end - begin);
+        end = clock();
+        time_spent = (double)(end - begin);
 
 	printf("time spent b: %f\n",time_spent);
 
