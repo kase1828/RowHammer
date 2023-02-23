@@ -38,6 +38,8 @@ int main() {
 	printf("sizeof a: %d\n",sizeof(a));
 	printf("fill a with r: %f\n",time_spent);
 
+	usleep(10);
+
 	begin = clock();
 
 	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
@@ -48,6 +50,8 @@ int main() {
         time_spent = (double)(end - begin);
 
 	printf("fill b with a: %f\n",time_spent);
+
+	usleep(10);
 
 	begin = clock();
 
@@ -60,6 +64,8 @@ int main() {
 
 	printf("fill c with r: %f\n",time_spent);
 
+	usleep(10);
+
 	begin = clock();
 
 	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
@@ -71,6 +77,8 @@ int main() {
 
 	printf("fill n with c: %f\n",time_spent);
 
+	usleep(10);
+
 	begin = clock();
 
 	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
@@ -81,6 +89,8 @@ int main() {
         time_spent = (double)(end - begin);
 
 	printf("fill d with c: %f\n",time_spent);
+
+	usleep(10);
 
 	begin = clock();
 
