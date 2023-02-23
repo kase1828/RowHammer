@@ -41,57 +41,57 @@ int main() {
 	begin = clock();
 
 	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
-                num = a[i];
+                b[i] = a[i];
         }
 
         end = clock();
         time_spent = (double)(end - begin);
 
-	printf("fill n with a: %f\n",time_spent);
+	printf("fill b with a: %f\n",time_spent);
 
 	begin = clock();
 
 	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
-                num = a[i]; 
+                c[i] = rand();
         }
 
         end = clock();
         time_spent = (double)(end - begin);
 
-	printf("fill n with a: %f\n",time_spent);
+	printf("fill c with r: %f\n",time_spent);
 
 	begin = clock();
 
 	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
-                num = a[i];
+                num = c[i];
         }
 
         end = clock();
         time_spent = (double)(end - begin);
 
-	printf("fill n with a: %f\n",time_spent);
+	printf("fill n with c: %f\n",time_spent);
 
 	begin = clock();
 
 	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
-                num = a[i];
+                d[i] = c[i];
         }
 
         end = clock();
         time_spent = (double)(end - begin);
 
-	printf("fill n with a: %f\n",time_spent);
+	printf("fill d with c: %f\n",time_spent);
 
 	begin = clock();
 
 	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
-                num = a[i];
+                e[i] = a[i];
         }
 
         end = clock();
         time_spent = (double)(end - begin);
 
-	printf("fill n with a: %f\n",time_spent);
+	printf("fill e with a: %f\n",time_spent);
 
 	return 0;
 }
