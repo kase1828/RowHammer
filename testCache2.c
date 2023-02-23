@@ -56,39 +56,39 @@ int main() {
 	begin = clock();
 
 	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
-                c[i] = rand();
+                c[i] = a[i];
         }
 
         end = clock();
         time_spent = (double)(end - begin);
 
-	printf("fill c with r: %f\n",time_spent);
+	printf("fill c with a: %f\n",time_spent);
 
 	usleep(10);
 
 	begin = clock();
 
 	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
-                num = c[i];
+                f[i] = a[i];
         }
 
         end = clock();
         time_spent = (double)(end - begin);
 
-	printf("fill n with c: %f\n",time_spent);
+	printf("fill f with a: %f\n",time_spent);
 
 	usleep(10);
 
 	begin = clock();
 
 	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
-                d[i] = c[i];
+                d[i] = rand();
         }
 
         end = clock();
         time_spent = (double)(end - begin);
 
-	printf("fill d with c: %f\n",time_spent);
+	printf("fill d with r: %f\n",time_spent);
 
 	usleep(10);
 
