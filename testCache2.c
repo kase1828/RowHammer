@@ -20,6 +20,7 @@ int main() {
 	u_int64_t d[1024 * 1024 / 8];
 	u_int64_t e[1024 * 1024 / 8];
 	u_int64_t f[1024 * 1024 / 8];
+	u_int64_t num;
 
 	clock_t begin;
 	clock_t end;
@@ -28,68 +29,69 @@ int main() {
 	begin = clock();
 
 	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
-                a[i] = i;
+                a[i] = rand();
         }
 
         end = clock();
         time_spent = (double)(end - begin);
 
-	printf("fill a with i:  %f\n",time_spent);
+	printf("sizeof a: %d\n",sizeof(a));
+	printf("fill a with r: %f\n",time_spent);
 
 	begin = clock();
 
 	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
-                b[i] = a[i];
+                num = a[i];
         }
 
         end = clock();
         time_spent = (double)(end - begin);
 
-	printf("fill b with a:  %f\n",time_spent);
+	printf("fill n with a: %f\n",time_spent);
 
 	begin = clock();
 
 	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
-                c[i] = a[i];
+                num = a[i]; 
         }
 
         end = clock();
         time_spent = (double)(end - begin);
 
-	printf("fill c with a:  %f\n",time_spent);
+	printf("fill n with a: %f\n",time_spent);
 
 	begin = clock();
 
 	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
-                d[i] = -i;
+                num = a[i];
         }
 
         end = clock();
         time_spent = (double)(end - begin);
 
-	printf("fill d with -i: %f\n",time_spent);
+	printf("fill n with a: %f\n",time_spent);
 
 	begin = clock();
 
 	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
-                e[i] = d[i];
+                num = a[i];
         }
 
         end = clock();
         time_spent = (double)(end - begin);
 
-	printf("fill e with d:  %f\n",time_spent);
+	printf("fill n with a: %f\n",time_spent);
 
 	begin = clock();
 
 	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
-                f[i] = a[i];
+                num = a[i];
         }
 
         end = clock();
         time_spent = (double)(end - begin);
 
-	printf("fill f with a:  %f\n",time_spent);
+	printf("fill n with a: %f\n",time_spent);
 
 	return 0;
 }
