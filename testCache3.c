@@ -26,10 +26,6 @@ int main() {
         clock_t end;
         double time_spent;
 
-        for (u_int64_t i = 0; i < 16384 / 8; i++) {
-                c[i] = rand();
-        }
-
         for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
                 a[i] = rand();
         }
