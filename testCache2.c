@@ -26,18 +26,18 @@ int main() {
 	clock_t end;
 	double time_spent;
 
-	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
+	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i=i+8) {
                 a[i] = rand();
         }
 
-	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
+	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i=i+8) {
                 a1[i] = a[i];
 		//num = a[i];
         }
 
 	begin = clock();
 
-        for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
+        for (u_int64_t i = 0; i < CACHE_SIZE / 8; i=i+8) {
                 num = a1[i];
         }
 
@@ -48,14 +48,14 @@ int main() {
 
 	printf("%d\n",num);
 
-	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
+	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i=i+8) {
                 a2[i] = a[i];
 		//num = a[i];
         }
 
 	begin = clock();
 
-        for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
+        for (u_int64_t i = 0; i < CACHE_SIZE / 8; i=i+8) {
                 num = a1[i];
         }
 
@@ -66,14 +66,14 @@ int main() {
 
 	printf("%d\n",num);
 
-	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
+	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i=i+8) {
                 a2[i] = a[i];
                 //num = a[i];
         }
 
 	begin = clock();
 
-        for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
+        for (u_int64_t i = 0; i < CACHE_SIZE / 8; i=i+8) {
                 num = a2[i];
         }
 
@@ -82,13 +82,13 @@ int main() {
 
         printf("a2 read: %f\n",time_spent);
 	
-	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
+	for (u_int64_t i = 0; i < CACHE_SIZE / 8; i=i+8) {
                 b[i] = rand();
         }
 
 	begin = clock();
 
-        for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
+        for (u_int64_t i = 0; i < CACHE_SIZE / 8; i=i+8) {
                 num = a2[i];
         }
 
