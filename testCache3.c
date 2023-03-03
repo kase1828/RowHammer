@@ -22,6 +22,11 @@ int main() {
         u_int64_t b1[16384 / 8];
         u_int64_t num;
 
+	u_int64_t c[1024 * 1024 / 8];
+        u_int64_t d[1024 * 1024 / 8];
+        u_int64_t c1[1024 * 1024 / 8];
+        u_int64_t c2[1024 * 1024 / 8];
+
         clock_t begin;
         clock_t end;
         double time_spent;
@@ -62,25 +67,42 @@ int main() {
         end = clock();
         time_spent = (double)(end - begin);
 
-        printf("a1 read after a2: %f\n",time_spent);
+        printf("a1 after L1 fill: %f\n",time_spent);
 
         printf("%d\n",num);
 
-        for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
-                a2[i] = a[i];
+	for (u_int64_t i = 0; i < 1024 * 1024 / 8; i++) {
+                c[i] = rand();
+        }
+
+        for (u_int64_t i = 0; i < 1024 * 1024 / 8; i++) {
+                c1[i] = c[i];
                 //num = a[i];
+        }
+
+        for (u_int64_t i = 0; i < 1024 * 1024 / 8; i++) {
+                num = c1[i];
+        }
+
+        for (u_int64_t i = 0; i < 1024 * 1024 / 8; i++) {
+                c2[i] = c[i];
+                //num = a[i];
+        }
+
+        for (u_int64_t i = 0; i < 1024 * 1024 / 8; i++) {
+                num = c1[i];
         }
 
         begin = clock();
 
         for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
-                num = a2[i];
+                num = a1[i];
         }
 
         end = clock();
         time_spent = (double)(end - begin);
 
-        printf("a2 read: %f\n",time_spent);
+        printf("a1 after L2 fill: %f\n",time_spent);
 
         for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
                 b[i] = rand();
