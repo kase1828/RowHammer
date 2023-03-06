@@ -51,7 +51,7 @@ int main() {
 
         printf("a1 read: %f\n",time_spent);
 
-        printf("%d\n",num);
+        printf("%llu\n",num);
 
         for (u_int64_t i = 0; i < CACHE_SIZE / 8; i++) {
                 a2[i] = a[i];
@@ -69,7 +69,7 @@ int main() {
 
         printf("a1 after L1 fill: %f\n",time_spent);
 
-        printf("%d\n",num);
+        printf("%llu\n",num);
 
 	for (u_int64_t i = 0; i < 1024 * 1024 / 8; i++) {
                 c[i] = rand();
@@ -118,7 +118,7 @@ int main() {
         time_spent = (double)(end - begin);
 
         printf("a2 read after b: %f\n",time_spent);
-        printf("%d\n",num);
+        printf("%llu\n",num);
 
 /*
         begin = clock();
