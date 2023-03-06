@@ -17,6 +17,7 @@ int main() {
 
         u_int64_t a[16384 / 16]; // 8 KB
 	u_int64_t b[16384 / 8]; // 16 KB
+	u_int64_t b2[16384 / 8]; // 16 KB
         u_int64_t c[524288 / 8]; // 512 KB
         u_int64_t num;
 
@@ -37,7 +38,7 @@ int main() {
         end = clock();
         time_spent = (double)(end - begin);
 
-        printf("1st read: %f\n",time_spent);
+        printf("L1 read:   %f\n",time_spent);
 
 	for (u_int64_t i = 0; i < L1_SIZE / 8; i++) {
                 b[i] = rand();
@@ -52,11 +53,15 @@ int main() {
         end = clock();
         time_spent = (double)(end - begin);
 
-        printf("2nd read: %f\n",time_spent);
+        printf("L2 read:   %f\n",time_spent);
 
 	for (u_int64_t i = 0; i < L2_SIZE / 8; i++) {
                 c[i] = rand();
         }
+
+	for (u_int64_t i = 0; i < L1_SIZE / 8; i++) {
+                b2[i] = rand();
+        }	
 
         begin = clock();
 
@@ -67,7 +72,7 @@ int main() {
         end = clock();
         time_spent = (double)(end - begin);
 
-        printf("3rd read: %f\n",time_spent);
+        printf("Main read: %f\n",time_spent);
 
 	return  0;
 
