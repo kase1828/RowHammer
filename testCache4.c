@@ -25,12 +25,14 @@ int main() {
         clock_t end;
         double time_spent;
 
+	// fill a
         for (u_int64_t i = 0; i < L1_SIZE / 16; i++) {
                 a[i] = rand();
         }
 
         begin = clock();
 
+	// time read
         for (u_int64_t i = 0; i < L1_SIZE / 16; i++) {
                 num = a[i];
         }
@@ -40,12 +42,14 @@ int main() {
 
         printf("L1 read:   %f\n",time_spent);
 
+	// fill L1
 	for (u_int64_t i = 0; i < L1_SIZE / 8; i++) {
                 b[i] = rand();
         }
 
         begin = clock();
 
+	// time read
         for (u_int64_t i = 0; i < L1_SIZE / 16; i++) {
                 num = a[i];
         }
@@ -55,16 +59,19 @@ int main() {
 
         printf("L2 read:   %f\n",time_spent);
 
+	// fill L1
+        for (u_int64_t i = 0; i < L1_SIZE / 8; i++) {
+                b2[i] = rand();
+        }
+
+	// fill L2
 	for (u_int64_t i = 0; i < L2_SIZE / 8; i++) {
                 c[i] = rand();
         }
 
-	for (u_int64_t i = 0; i < L1_SIZE / 8; i++) {
-                b2[i] = rand();
-        }	
-
         begin = clock();
 
+	// time read
         for (u_int64_t i = 0; i < L1_SIZE / 16; i++) {
                 num = a[i];
         }
