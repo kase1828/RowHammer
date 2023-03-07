@@ -8,15 +8,13 @@
 #include <time.h>
 #include <stdint.h>
 
-
-
-
 #define ROUND 140000
 #define HAMMER_ROUND 140000        // the number of cpu cycle between 2 subsequent memory refresh
 #define CACHE_SIZE (1024 * 1024)
+#define L1_SIZE (16384)
+#define L2_SIZE (524288)
 
 int mapping_size = 0x1000;
-
 
 int main(){
 
@@ -27,6 +25,9 @@ int main(){
     int found_flag = 0;
     int j;
     unsigned long temporary = 0xFFFFFFFF;
+
+    u_int64_t b2[16384 / 8];
+    u_int64_t c[524288 / 8];
     
     void *mapped = mmap(NULL, mapping_size, PROT_READ | PROT_WRITE,
                     MAP_PRIVATE | MAP_ANON, -1, 0);
@@ -105,9 +106,13 @@ int main(){
                     "str %2, [%1]\n\t"
                     ::"r" (addr1), "r" (addr2), "r" (temporary)
               );
-		for (int j = 0; j < CACHE_SIZE / 4; j++) {
-                        num = fill[j];
-                }
+		for (u_int64_t i = 0; i < L2_SIZE / 8; i++) {
+			c[i] = rand();
+		}
+
+		for (u_int64_t i = 0; i < L1_SIZE / 8; i++) {
+			b2[i] = rand();
+        	}
             }
             break;
 /*
