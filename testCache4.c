@@ -55,6 +55,10 @@ int main() {
                 b[i] = rand();
         }
 
+	for (u_int64_t i = 0; i < L1_SIZE / 4; i=i+8) {
+                num = b[i];
+        }
+
         begin = clock();
 
 	// time read
@@ -72,9 +76,17 @@ int main() {
                 b[i] = rand();
         }
 
+	for (u_int64_t i = 0; i < L1_SIZE / 4; i=i+8) {
+                num = b[i];
+        }
+
 	// fill L2
 	for (u_int64_t i = 0; i < L2_SIZE / 4; i++) {
                 c[i] = rand();
+        }
+
+	for (u_int64_t i = 0; i < L2_SIZE / 4; i=i+8) {
+                num = c[i];
         }
 
         begin = clock();
