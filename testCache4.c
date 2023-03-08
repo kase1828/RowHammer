@@ -16,9 +16,8 @@ int main() {
         printf("start\n");
 
 	u_int64_t a[16384 / 16]; // 8 KB
-	u_int64_t b[16384 / 8]; // 16 KB
-	u_int64_t b2[16384 / 8]; // 16 KB
-	u_int64_t c[524288 / 8]; // 512 KB
+	u_int64_t b[16384 / 4]; // 32 KB
+	u_int64_t c[524288 / 4]; // 1 MB
 	u_int64_t num;
 
         clock_t begin;
@@ -26,13 +25,22 @@ int main() {
         double time_spent;
 
 	// fill a
-        for (u_int64_t i = 0; i < L1_SIZE / 16; i=i+8) {
+        for (u_int64_t i = 0; i < L1_SIZE / 16; i++) {
                 a[i] = rand();
         }
 
-        begin = clock();
+	begin = clock();
 
-	// time read
+        // time read
+        for (u_int64_t i = 0; i < L1_SIZE / 16; i=i+8) {
+                num = a[i];
+        }
+
+        end = clock();
+
+	begin = clock();
+
+        // time read
         for (u_int64_t i = 0; i < L1_SIZE / 16; i=i+8) {
                 num = a[i];
         }
@@ -40,10 +48,10 @@ int main() {
         end = clock();
         time_spent = (double)(end - begin);
 
-        printf("L1 read:   %f\n",time_spent);
+        printf("L1 read:   %f\n",time_spent);		
 
 	// fill L1
-	for (u_int64_t i = 0; i < L1_SIZE / 8; i=i+8) {
+	for (u_int64_t i = 0; i < L1_SIZE / 4; i++) {
                 b[i] = rand();
         }
 
@@ -60,12 +68,12 @@ int main() {
         printf("L2 read:   %f\n",time_spent);
 
 	// fill L1
-        for (u_int64_t i = 0; i < L1_SIZE / 8; i=i+8) {
-                b2[i] = rand();
+        for (u_int64_t i = 0; i < L1_SIZE / 4; i++) {
+                b[i] = rand();
         }
 
 	// fill L2
-	for (u_int64_t i = 0; i < L2_SIZE / 8; i=i+8) {
+	for (u_int64_t i = 0; i < L2_SIZE / 4; i++) {
                 c[i] = rand();
         }
 
