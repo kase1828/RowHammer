@@ -9,7 +9,7 @@
 #include <stdint.h>
 
 #define ROUND 140000
-#define HAMMER_ROUND 140000        // the number of cpu cycle between 2 subsequent memory refresh
+#define HAMMER_ROUND 140000
 #define CACHE_SIZE (1024 * 1024)
 #define L1_SIZE (16384)
 #define L2_SIZE (524288)
