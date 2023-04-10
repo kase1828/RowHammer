@@ -1,0 +1,2 @@
+#! /bin/sh
+ gcc -Wall -Wextra cache_time.c  timer.c -g -o cache_time  -DV=0  -DTIMER_MODE=0 -UFILE_IO -DTHRESHOLD=0 -DTARGET_CORE=2 -O0

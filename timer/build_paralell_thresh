@@ -1,0 +1,9 @@
+#! /usr/bin/bash
+	echo " Usage: ./build_paralell_thresh [timer_mode]"
+	echo "The default timer mode for pthread timer is 0"
+for i in {1..5}; 
+	#create multiple different threads
+do
+	echo "Building for Core $i"
+	gcc -Wall -Wextra timer.c cache_time.c -g -o pCT_$i -DV=2  -DTIMER_MODE=$1 -DFILE_IO -DTHRESHOLD=0 -DTARGET_CORE=$i -O0
+done

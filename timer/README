@@ -1,0 +1,10 @@
+This is a demonstration of timing Cache Hit and Misses using a Pthread timer. The executable cache_time should print out the following:
+(Cache Hit time),(Cache Miss time),(Miss-Hit) \n
+
+Note, we expect the third column to be greater than zero.
+
+To build, run the build_thresh script
+The paralell_thresh script should build five times, each targeting a different core to execute on.
+The V5out.txt file shows some example output data.
+
+Increasing the number of cycles per execution (j>1) seems to cause an increase in reading latency. I'm still working on this problem...
