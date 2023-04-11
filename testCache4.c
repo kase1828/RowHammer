@@ -38,11 +38,14 @@ int main() {
 
         end = clock();
 
+	int r = rand();
+	int r1 = r % 512;
+
 	begin = clock();
 
         // time read
-        for (u_int64_t i = 0; i < L1_SIZE / 16; i=i+8) {
-                num = a[i];
+        for (u_int64_t i = 0; i < L1_SIZE / 16; i=i+512) {
+                num = a[i + r1];
         }
 
         end = clock();
@@ -59,11 +62,14 @@ int main() {
                 num = b[i];
         }
 
+	r = rand();
+	r1 = r % 512;
+
         begin = clock();
 
 	// time read
-        for (u_int64_t i = 0; i < L1_SIZE / 16; i=i+8) {
-                num = a[i];
+        for (u_int64_t i = 0; i < L1_SIZE / 16; i=i+512) {
+                num = a[i + r1];
         }
 
         end = clock();
@@ -89,11 +95,14 @@ int main() {
                 num = c[i];
         }
 
+	r = rand();
+	r1 = r % 512;
+
         begin = clock();
 
 	// time read
-        for (u_int64_t i = 0; i < L1_SIZE / 16; i=i+8) {
-                num = a[i];
+        for (u_int64_t i = 0; i < L1_SIZE / 16; i=i+512) {
+                num = a[i + r1];
         }
 
         end = clock();
